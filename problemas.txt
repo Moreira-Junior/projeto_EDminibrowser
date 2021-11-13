@@ -10,10 +10,10 @@ colocar o tratamento de exception para o caso de dar o back sem página no home
 3-
 digitar a mesma página do home faz com que ela seja adicionada ao histórico repetidamente
 
-4-
+4- (SOLUCIONADO)
 adicionar funcionalidade #showhist
 
-5=
+5- (SOLUCIONADO)
 adicionar funcionalidade #help para explicar o que os comandos de # fazem
 
 

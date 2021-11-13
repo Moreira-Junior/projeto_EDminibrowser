@@ -13,6 +13,7 @@ while True:
     except:
         print(f'Home: ') 
     print('Digite a url ou #back para retornar à última página visitada.')
+    print('Para abrir a ajuda, digite #help!')
     ent=input()
     ent=ent.lower()
     try:
@@ -22,7 +23,7 @@ while True:
     except:
         pass
 
-    if ent!='#sair' and ent!='#back' and ent!='#help' and ent!='#add':
+    if ent!='#sair' and ent!='#back' and ent!='#help' and ent!='#add' and ent!='#showhist' and ent!='#help':
 
       while True:
         url=Pagina(ent)
@@ -32,7 +33,7 @@ while True:
           print('Digite novamente a página: ')
           ent=input()
           ent=ent.lower()
-          if ent=='#sair' or ent=='#back' or ent=='#help' or ent=='#add':
+          if ent=='#sair' or ent=='#back' or ent=='#help' or ent=='#add' or ent=='#showhist' or ent=='#help':
             del url
             break
 
@@ -57,7 +58,31 @@ while True:
                 h1.remover()
         except:
             pass
+    
+    if ent=='#showhist':
+        h1.imprimir()
+        try:
+            if h1.topo()==url:
+                h1.remover()
+        except:
+            pass
+        input('Pressione ENTER para continuar')
 
+    if ent=='#help':
+        print('''================Help do navegador================
+        comando:                função:
+        #sair                   finaliza o navegador
+        #add                    adiciona uma página
+        #back                   voltar para página anterior
+        #showhist               mostrar o histórico de navegação
+        ''')
+        try:
+            if h1.topo()==url:
+                h1.remover()
+        except:
+            pass
+        input('Pressione ENTER para continuar')
+    
     if ent=='#sair':
         print('Fim do programa!')
         break

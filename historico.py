@@ -39,3 +39,8 @@ class Historico:
     
     def deletar(self):
         del self.__historico
+    
+    def imprimir(self):
+        for i in self.__historico:
+            print(i)
+    
