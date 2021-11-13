@@ -16,5 +16,10 @@ adicionar funcionalidade #showhist
 5- (SOLUCIONADO)
 adicionar funcionalidade #help para explicar o que os comandos de # fazem
 
+6-
+adicionar o acesso a páginas internas, como o exemplo de www.ifpb.edu.br/tsi.
+uma vez estando em www.ifpb.edu.br, será necessário apenas digitar /tsi para ir para página citada acima
+
+
 
 
