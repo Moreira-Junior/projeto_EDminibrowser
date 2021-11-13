@@ -1,5 +1,4 @@
 
-
 class Historico:
     def __init__(self):
         self.__historico = []
@@ -40,6 +39,3 @@ class Historico:
     
     def deletar(self):
         del self.__historico
-    
-
-
