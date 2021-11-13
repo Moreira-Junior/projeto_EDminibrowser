@@ -38,23 +38,26 @@ while True:
 
       
     if ent=='#back':
-      h1.remover()
-      url=h1.topo()
-      if h1.tamanho()>=1:
-          h1.remover()
-      else:
-          h1.__init__()
-          del url
+        h1.remover()
+        url=h1.topo()
+        if h1.tamanho()>=1:
+            h1.remover()
+        else:
+            h1.__init__()
+            del url
     
-    if ent=='#add':
-      print('Digite a nova url: ')
-      teste=input()
-      teste='\n'+teste
-      novaurl=Adicionador(teste)
-      novaurl.add('sites.txt')
-      if h1.topo()==url:
-          h1.remover()
-      
+    if ent=='#add':    
+        print('Digite a nova url: ')
+        teste=input()
+        teste='\n'+teste
+        novaurl=Adicionador(teste)
+        novaurl.add('sites.txt')
+        try:
+            if h1.topo()==url:
+                h1.remover()
+        except:
+            pass
+
     if ent=='#sair':
         print('Fim do programa!')
         break
