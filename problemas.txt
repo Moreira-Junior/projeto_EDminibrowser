@@ -20,6 +20,10 @@ adicionar funcionalidade #help para explicar o que os comandos de # fazem
 adicionar o acesso a páginas internas, como o exemplo de www.ifpb.edu.br/tsi.
 uma vez estando em www.ifpb.edu.br, será necessário apenas digitar /tsi para ir para página citada acima
 
+7-
+testar o formato da url ao adicionar com #add
+
+
 
 
 
