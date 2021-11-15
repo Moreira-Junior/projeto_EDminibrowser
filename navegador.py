@@ -18,9 +18,10 @@ while True:
     ent=input()
     ent=ent.lower()
     try:
-        # if url!=ent:
-        #     h1.inserir(url)
-        h1.inserir(url)
+        if str(url)==ent:
+            print('Você já está nessa página!')
+        else:
+            h1.inserir(url)
     except:
         pass
 
