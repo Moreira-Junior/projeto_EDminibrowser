@@ -39,13 +39,16 @@ while True:
 
       
     if ent=='#back':
-        h1.remover()
-        url=h1.topo()
-        if h1.tamanho()>=1:
-            h1.remover()
+        if h1.vazio():
+            print('Não há página no histórico ainda!')
         else:
-            h1.__init__()
-            del url
+            h1.remover()
+            url=h1.topo()
+            if h1.tamanho()>=1:
+                h1.remover()
+            else:
+                h1.__init__()
+                del url
     
     if ent=='#add':    
         print('Digite a nova url: ')
