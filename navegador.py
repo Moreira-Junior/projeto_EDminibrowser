@@ -17,7 +17,7 @@ while True:
     ent=input()
     ent=ent.lower()
     try:
-        # if url!=h1.topo():
+        # if url!=ent:
         #     h1.inserir(url)
         h1.inserir(url)
     except:
