@@ -14,7 +14,7 @@ class Pagina:
         return f'{self.__url}'
     
     def deletar(self):
-      """Deleta a url"""
+        """Deleta a url"""
         self.__url
     
     def teste(self):
