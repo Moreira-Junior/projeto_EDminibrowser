@@ -1,11 +1,14 @@
 
 
 class Adicionador:
+  """Classe para adiconar url no arquivo texto"""
   def __init__(self,novaurl):
+    """Construtor para adicionar nova url"""
     self.__novaurl=novaurl
   
 
   def add(self,nome_arquivo):
+    """Adiciona página nova no arquivo texto"""
     self.__existe=False
     with open(nome_arquivo) as arquivo:
       for i in arquivo:

@@ -1,21 +1,27 @@
 
 class Pagina:
+    """Classe do objeto página"""
     def __init__ (self,url):
+        """Construtor da url"""
         self.__url=url
         
     def get_url(self):
+        """Retorna a url"""
         return self.__url
 
     def __str__(self):
+        """Retrona o nome da url"""
         return f'{self.__url}'
     
     def deletar(self):
+        """Deleta a url"""
         self.__url
     
     def teste(self):
         pass
     
     def ler_arquivo(self,nome_arquivo):
+      """Ler no arquivo texto as urls cadstradas""" 
       with open(nome_arquivo) as arquivo:
         self.__sites=[]
         self.__cont=0
@@ -31,6 +37,7 @@ class Pagina:
         if self.__cont>=1:
           print('Página encontrada!')
         else:
+          print()
           print('Página não encontrada!')
           self.__teste=False
         

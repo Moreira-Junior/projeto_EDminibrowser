@@ -1,3 +1,4 @@
+# Importando funções dos outros módulos
 from paginas import Pagina
 from historico import Historico
 from texto import Adicionador
