@@ -7,6 +7,10 @@ class Pagina:
         return self.__url
 
     def __str__(self):
+<<<<<<< Updated upstream
+=======
+        """Retorna o objeto url"""
+>>>>>>> Stashed changes
         return f'{self.__url}'
     
     def deletar(self):
