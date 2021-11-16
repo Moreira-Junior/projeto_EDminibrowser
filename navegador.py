@@ -57,12 +57,20 @@ while True:
         teste=input()
         teste='\n'+teste
         novaurl=Adicionador(teste)
-        novaurl.add('sites.txt')
-        try:
-            if h1.topo()==url:
-                h1.remover()
-        except:
-            pass
+        if novaurl.forma():
+            novaurl.add('sites.txt')
+            try:
+                if h1.topo()==url:
+                    h1.remover()
+            except:
+                pass
+        else:
+            try:
+                if h1.topo()==url:
+                    h1.remover()
+            except:
+                pass
+            print('Formato de página inválido!')
     
     if ent=='#showhist':
         h1.imprimir()

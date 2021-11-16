@@ -20,5 +20,15 @@ class Adicionador:
         with open(nome_arquivo,'a') as arquivo:
           arquivo.write(self.__novaurl)
           print('Página adicionada') 
-  
-      
+    
+  def forma(self):
+      self.__forma = self.__novaurl.split('.')
+      self.__testf=True
+      if self.__forma[0]=='\nwww':
+          if self.__forma[-1]=='com' or self.__forma[-1]=='br' or self.__forma[-1]=='net':
+              self.__testf=True
+          else:
+              self.__testf=False
+      else:
+          self.__testf=False
+      return self.__testf  

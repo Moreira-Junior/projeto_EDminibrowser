@@ -1,4 +1,4 @@
-1- (APARENTEMENTE SOLUCIONADO)
+1- (SOLUCIONADO)
 para o caso de digitar o add vezes seguidas, o objeto que aparece no home ficará sendo 
 carregado para o objeto historico e sendo exibido nas paginas visitadas
 
@@ -20,7 +20,7 @@ adicionar funcionalidade #help para explicar o que os comandos de # fazem
 adicionar o acesso a páginas internas, como o exemplo de www.ifpb.edu.br/tsi.
 uma vez estando em www.ifpb.edu.br, será necessário apenas digitar /tsi para ir para página citada acima
 
-7-
+7- (SOLUCIONADO)
 testar o formato da url ao adicionar com #add
 
 
