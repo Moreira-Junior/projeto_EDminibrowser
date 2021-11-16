@@ -7,7 +7,7 @@ possível solução: testar se o topo é igual ao url, se sim, não colocar na p
 2- (SOLUCIONADO)
 colocar o tratamento de exception para o caso de dar o back sem página no home
 
-3-
+3- (SOLUCIONADO)
 digitar a mesma página do home faz com que ela seja adicionada ao histórico repetidamente
 
 4- (SOLUCIONADO)
