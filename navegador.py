@@ -3,9 +3,10 @@ from paginas import Pagina
 from historico import Historico
 from texto import Adicionador
 
+#criação do objeto historico1 que será a pilha sequencial
 h1=Historico()
 
-
+#loop para inserção do usuário das páginas desejadas
 while True:
     print()
     print(f'Páginas visitadas: {h1}')
@@ -24,9 +25,10 @@ while True:
             h1.inserir(url)
     except:
         pass
-
+    
+    #condição para digitação da url, com resultados possíveis de página válida ou inválida
     if ent!='#sair' and ent!='#back' and ent!='#help' and ent!='#add' and ent!='#showhist' and ent!='#help':
-
+      #loop de inserção de página, verificando se ela existe no banco de dados em txt
       while True:
         url=Pagina(ent)
         if url.ler_arquivo('sites.txt'):
@@ -39,7 +41,7 @@ while True:
             del url
             break
 
-      
+    #funcionalidade back, retornando a página anterior na pilha  
     if ent=='#back':
         if h1.vazio():
             print('Não há página no histórico ainda!')
@@ -52,6 +54,7 @@ while True:
                 h1.__init__()
                 del url
     
+    #funcionalidade add, adicionando uma nova url e escrevendo-a no banco de urls em txt
     if ent=='#add':    
         print('Digite a nova url: ')
         teste=input()
@@ -72,6 +75,7 @@ while True:
                 pass
             print('Formato de página inválido!')
     
+    #funcionalidade para imprimir o histórico de páginas visitadas
     if ent=='#showhist':
         h1.imprimir()
         try:
@@ -81,6 +85,7 @@ while True:
             pass
         input('Pressione ENTER para continuar')
 
+    #funcionalidade para informar quais comandos poderão ser utilizados pelo usuário
     if ent=='#help':
         print('''================Help do navegador================
         comando:                função:
@@ -96,6 +101,7 @@ while True:
             pass
         input('Pressione ENTER para continuar')
     
+    #comando que encerra o loop e finaliza o programa
     if ent=='#sair':
         print('Fim do programa!')
         break

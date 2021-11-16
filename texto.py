@@ -22,6 +22,7 @@ class Adicionador:
           print('Página adicionada') 
     
   def forma(self):
+      #método para avaliar se a forma da url que será adicionada é válida
       self.__forma = self.__novaurl.split('.')
       self.__testf=True
       if self.__forma[0]=='\nwww':
