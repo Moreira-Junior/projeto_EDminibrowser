@@ -21,7 +21,7 @@ class Pagina:
         pass
     
     def ler_arquivo(self,nome_arquivo):
-      """Ler no arquivo texto as urls cadstradas""" 
+      """Ler no arquivo texto as urls cadastradas""" 
       with open(nome_arquivo) as arquivo:
         self.__sites=[]
         self.__cont=0

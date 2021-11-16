@@ -5,7 +5,7 @@ class Historico:
         self.__historico = []
     
     def topo(self):
-        """Verfica o tamanho do histórico, retorna do histórico a página do topo, se ocorrer erro retorna o histórico como está"""
+        """Verifica o tamanho do histórico, retorna do histórico a página do topo, se ocorrer erro retorna o histórico como está"""
         try: 
             temp=len(self.__historico)
             return self.__historico[temp-1]
