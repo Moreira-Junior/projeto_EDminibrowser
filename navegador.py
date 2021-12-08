@@ -1,4 +1,5 @@
 from pilha import Pilha
+from arvorebinaria import *
 import re
 
 class Navegador:
@@ -7,6 +8,7 @@ class Navegador:
         self.__home=''
         self.__nome_arquivo=nome_arquivo
         self.__sites=[]
+        self.__arvores=[]
         self.captar_banco(nome_arquivo)
         
     def captar_banco(self,nome_arquivo):
@@ -14,21 +16,59 @@ class Navegador:
         with open(nome_arquivo) as arquivo:
             for i in arquivo:
                 i=i.strip('\n')
+                self.__arvores.append(ArvoreBinaria(i))
+                self.teste_filho(i)
                 self.__sites.append(i)
+                i=i.replace('/','.',4)
+                with open(i+'.txt','w') as arquivo2:
+                    arquivo2.write('\n<O conteudo da pagina '+i+' esta sendo exibido.>')
+            arquivo2.close()
+            arquivo.close()
+    
+    def pegar_filho_esq(self,url):
+        for i in self.__arvores:
+            if str(i.getRaiz())==url:
+                temp = i.getBaixoEsq()
+                i.resetCursor()
+                return temp
+
+
+    def pegar_filho_dir(self,url):
+        for i in self.__arvores:
+            if str(i.getRaiz())==url:
+                temp = i.getBaixoDir()
+                i.resetCursor()
+                return temp
+
+    def teste_filho(self,nova_url):
+        for i in self.__arvores:
+            if str(i.getRaiz()) in str(nova_url) and str(i.getRaiz()) != str(nova_url) and (len(nova_url.split('/'))) == (len(str(i.getRaiz()).split('/'))+1) :
+                if i.getBaixoEsq() is None:
+                    i.resetCursor()
+                    i.addFilhoEsq(nova_url)
+                    i.resetCursor()
+                elif i.getBaixoDir() is None:
+                    i.resetCursor()
+                    i.addFilhoDir(nova_url)
+                    i.resetCursor()
+                else:
+                    pass
           
     def adicionar(self,nova_url):
+
         
         if not self.existencia(nova_url):
             with open(self.__nome_arquivo,'a') as arquivo:
               arquivo.write('\n'+nova_url)
               self.__sites.append(nova_url)
-              arquivo.close()
-              
+              self.__arvores.append(ArvoreBinaria(nova_url))
+              self.teste_filho(nova_url)
+              self.__sites.append(nova_url)
+              with open(nova_url+'.txt','w') as arquivo2:
+                  arquivo2.write('\n<O conteudo da pagina '+nova_url+' esta sendo exibido.>')
+              arquivo2.close()
+              arquivo.close()    
         return self.existe
-    
-    def home(self,url):
-        self.__home=url
-        return self.__home
 
     def empilhar(self,url):
         self.__historico.empilha(url)
@@ -52,8 +92,7 @@ class Navegador:
     def existencia(self,nova_url):
         self.existe=False
         for i in self.__sites:
-            # i=i.strip('\n')
-            if i==str(nova_url):#.strip('\n'):
+            if i==str(nova_url):
                 self.existe=True
         return self.existe
     
@@ -66,9 +105,7 @@ class Navegador:
     def forma(self,nova_url):
         self.formato=True
         if nova_url[0:4]=='http':
-            testeForma = re.findall('http://[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url)  
-        elif nova_url[0:5]=='https':
-            testeForma = re.findall('https://[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url)  
+            testeForma = re.findall('http://[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url) 
         else:
             testeForma = re.findall('www.[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url)
         if testeForma==[]:
@@ -77,26 +114,11 @@ class Navegador:
             self.formato=True
         return self.formato
 
-    def imprime_historico(self):
-        # """Imprime o histórico"""
-        # print(self.__historico)
-        # for i in self.__historico:
-        #     print(i)
-        return self.__historico.imprime_historico()
-    
-        
+    def renderizar(self,url):
+        with open(url+'.txt','r') as arquivo2:
+            string=arquivo2.read()
+        arquivo2.close()
+        return string
 
-
-      #método para avaliar se a forma da url que será adicionada é válida
-    #   self.__forma = self.__novaurl.split('.')
-    #   self.__testf=True
-    #   if self.__forma[0]=='\nwww':
-    #       if self.__forma[-1]=='com' or self.__forma[-1]=='br' or self.__forma[-1]=='net':
-    #           self.__testf=True
-    #       else:
-    #           self.__testf=False
-    #   else:
-    #       self.__testf=False
-    #   return self.__testf 
         
 
