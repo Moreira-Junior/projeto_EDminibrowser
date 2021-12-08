@@ -5,7 +5,7 @@ import re
 class Navegador:
     def __init__(self,nome_arquivo):
         self.__historico=Pilha()
-        self.__home=''
+        # self.__home=''
         self.__nome_arquivo=nome_arquivo
         self.__sites=[]
         self.__arvores=[]
@@ -56,15 +56,14 @@ class Navegador:
           
     def adicionar(self,nova_url):
 
-        
         if not self.existencia(nova_url):
             with open(self.__nome_arquivo,'a') as arquivo:
               arquivo.write('\n'+nova_url)
               self.__sites.append(nova_url)
               self.__arvores.append(ArvoreBinaria(nova_url))
               self.teste_filho(nova_url)
-              self.__sites.append(nova_url)
-              with open(nova_url+'.txt','w') as arquivo2:
+            #   self.__sites.append(nova_url)
+              with open(nova_url.replace('/','.',4)+'.txt','w') as arquivo2:
                   arquivo2.write('\n<O conteudo da pagina '+nova_url+' esta sendo exibido.>')
               arquivo2.close()
               arquivo.close()    

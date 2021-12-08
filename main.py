@@ -2,7 +2,6 @@ from navegador import Navegador
 
 #criação do objeto navegador 1 que controlará as outras classes
 navegador1=Navegador('sites.txt')
-
 #loop para inserção do usuário das páginas desejadas
 while True:
     print()
