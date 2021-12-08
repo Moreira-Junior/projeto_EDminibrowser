@@ -1,107 +1,102 @@
-# Importando funções dos outros módulos
-from paginas import Pagina
-from historico import Historico
-from texto import Adicionador
+from pilha import Pilha
+import re
 
-#criação do objeto historico1 que será a pilha sequencial
-h1=Historico()
+class Navegador:
+    def __init__(self,nome_arquivo):
+        self.__historico=Pilha()
+        self.__home=''
+        self.__nome_arquivo=nome_arquivo
+        self.__sites=[]
+        self.captar_banco(nome_arquivo)
+        
+    def captar_banco(self,nome_arquivo):
+        """ = """ 
+        with open(nome_arquivo) as arquivo:
+            for i in arquivo:
+                i=i.strip('\n')
+                self.__sites.append(i)
+          
+    def adicionar(self,nova_url):
+        
+        if not self.existencia(nova_url):
+            with open(self.__nome_arquivo,'a') as arquivo:
+              arquivo.write('\n'+nova_url)
+              self.__sites.append(nova_url)
+              arquivo.close()
+              
+        return self.existe
+    
+    def home(self,url):
+        self.__home=url
+        return self.__home
 
-#loop para inserção do usuário das páginas desejadas
-while True:
-    print()
-    print(f'Páginas visitadas: {h1}')
-    try:
-        print(f'Home: {url}')
-    except:
-        print(f'Home: ') 
-    print('Digite a url ou #back para retornar à última página visitada.')
-    print('Para abrir a ajuda, digite #help!')
-    ent=input()
-    ent=ent.lower()
-    try:
-        if str(url)==ent:
-            print('Você já está nessa página!')
-        else:
-            h1.inserir(url)
-    except:
-        pass
+    def empilhar(self,url):
+        self.__historico.empilha(url)
     
-    #condição para digitação da url, com resultados possíveis de página válida ou inválida
-    if ent!='#sair' and ent!='#back' and ent!='#help' and ent!='#add' and ent!='#showhist' and ent!='#help':
-      #loop de inserção de página, verificando se ela existe no banco de dados em txt
-      while True:
-        url=Pagina(ent)
-        if url.ler_arquivo('sites.txt'):
-          break
-        else:
-          print('Digite novamente a página: ')
-          ent=input()
-          ent=ent.lower()
-          if ent=='#sair' or ent=='#back' or ent=='#help' or ent=='#add' or ent=='#showhist' or ent=='#help':
-            del url
-            break
-
-    #funcionalidade back, retornando a página anterior na pilha  
-    if ent=='#back':
-        if h1.vazio():
-            print('Não há página no histórico ainda!')
-        else:
-            h1.remover()
-            url=h1.topo()
-            if h1.tamanho()>=1:
-                h1.remover()
-            else:
-                h1.__init__()
-                del url
-    
-    #funcionalidade add, adicionando uma nova url e escrevendo-a no banco de urls em txt
-    if ent=='#add':    
-        print('Digite a nova url: ')
-        teste=input()
-        teste='\n'+teste
-        novaurl=Adicionador(teste)
-        if novaurl.forma():
-            novaurl.add('sites.txt')
-            try:
-                if h1.topo()==url:
-                    h1.remover()
-            except:
-                pass
-        else:
-            try:
-                if h1.topo()==url:
-                    h1.remover()
-            except:
-                pass
-            print('Formato de página inválido!')
-    
-    #funcionalidade para imprimir o histórico de páginas visitadas
-    if ent=='#showhist':
-        h1.imprimir()
+    def mostra_historico(self):
         try:
-            if h1.topo()==url:
-                h1.remover()
+            return self.__historico.imprimir()
         except:
-            pass
-        input('Pressione ENTER para continuar')
+            return ''
 
-    #funcionalidade para informar quais comandos poderão ser utilizados pelo usuário
-    if ent=='#help':
-        print('''================Help do navegador================
-        comando:                função:
-        #sair                   finaliza o navegador
-        #add                    adiciona uma página
-        #back                   voltar para página anterior
-        #showhist               mostrar o histórico de navegação
-        ''')
-        try:
-            if h1.topo()==url:
-                h1.remover()
-        except:
-            pass
-        input('Pressione ENTER para continuar')
+
+    def voltar(self):
+        if self.__historico.tamanho()<1:
+            self.__historico=[]
+        else:
+            self.__historico.desempilha()
     
-    #comando que encerra o loop e finaliza o programa
-    if ent=='#sair':
-        print('Fim do programa!')
-        break
+    def pilha_vazia(self):
+        return self.__historico.estaVazia()
+    
+    def existencia(self,nova_url):
+        self.existe=False
+        for i in self.__sites:
+            # i=i.strip('\n')
+            if i==str(nova_url):#.strip('\n'):
+                self.existe=True
+        return self.existe
+    
+    def topo_pilha(self):
+        return self.__historico.topo()
+
+    def tamanho(self):
+        return self.__historico.tamanho()
+    
+    def forma(self,nova_url):
+        self.formato=True
+        if nova_url[0:4]=='http':
+            testeForma = re.findall('http://[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url)  
+        elif nova_url[0:5]=='https':
+            testeForma = re.findall('https://[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url)  
+        else:
+            testeForma = re.findall('www.[a-z0-9_.\-]+\.[a-z0-9_\-/]+',nova_url)
+        if testeForma==[]:
+            self.formato=False
+        else:
+            self.formato=True
+        return self.formato
+
+    def imprime_historico(self):
+        # """Imprime o histórico"""
+        # print(self.__historico)
+        # for i in self.__historico:
+        #     print(i)
+        return self.__historico.imprime_historico()
+    
+        
+
+
+      #método para avaliar se a forma da url que será adicionada é válida
+    #   self.__forma = self.__novaurl.split('.')
+    #   self.__testf=True
+    #   if self.__forma[0]=='\nwww':
+    #       if self.__forma[-1]=='com' or self.__forma[-1]=='br' or self.__forma[-1]=='net':
+    #           self.__testf=True
+    #       else:
+    #           self.__testf=False
+    #   else:
+    #       self.__testf=False
+    #   return self.__testf 
+        
+
