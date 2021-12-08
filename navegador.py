@@ -5,7 +5,6 @@ import re
 class Navegador:
     def __init__(self,nome_arquivo):
         self.__historico=Pilha()
-        # self.__home=''
         self.__nome_arquivo=nome_arquivo
         self.__sites=[]
         self.__arvores=[]
@@ -42,7 +41,8 @@ class Navegador:
 
     def teste_filho(self,nova_url):
         for i in self.__arvores:
-            if str(i.getRaiz()) in str(nova_url) and str(i.getRaiz()) != str(nova_url) and (len(nova_url.split('/'))) == (len(str(i.getRaiz()).split('/'))+1) :
+            nomeFilho=i.getRaiz()
+            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(nova_url.split('/'))) == (len(str(nomeFilho).split('/'))+1) :
                 if i.getBaixoEsq() is None:
                     i.resetCursor()
                     i.addFilhoEsq(nova_url)
