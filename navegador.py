@@ -1,6 +1,7 @@
 from pilha import Pilha
-from arvorebinaria import *
 import re
+from binarytree import *
+
 
 class Navegador:
     def __init__(self,nome_arquivo):
@@ -8,48 +9,53 @@ class Navegador:
         self.__nome_arquivo=nome_arquivo
         self.__sites=[]
         self.__arvores=[]
-        self.captar_banco(nome_arquivo)
+        try:
+            self.captar_banco(nome_arquivo)
+        except:
+            with open(nome_arquivo,'w') as arquivo:  
+                arquivo.close()
+            self.captar_banco(nome_arquivo)
         
     def captar_banco(self,nome_arquivo):
         """ = """ 
         with open(nome_arquivo) as arquivo:
             for i in arquivo:
                 i=i.strip('\n')
-                self.__arvores.append(ArvoreBinaria(i))
+                self.__arvores.append(BinaryTree(i))
                 self.teste_filho(i)
                 self.__sites.append(i)
                 i=i.replace('/','.',4)
                 with open(i+'.txt','w') as arquivo2:
                     arquivo2.write('\n<O conteudo da pagina '+i+' esta sendo exibido.>')
-            arquivo2.close()
+                arquivo2.close()
             arquivo.close()
     
     def pegar_filho_esq(self,url):
         for i in self.__arvores:
-            if str(i.getRaiz())==url:
-                temp = i.getBaixoEsq()
+            if str(i.getRoot())==url:
+                temp = i.downLeft()
                 i.resetCursor()
                 return temp
 
 
     def pegar_filho_dir(self,url):
         for i in self.__arvores:
-            if str(i.getRaiz())==url:
-                temp = i.getBaixoDir()
+            if str(i.getRoot())==url:
+                temp = i.downRight()
                 i.resetCursor()
                 return temp
 
     def teste_filho(self,nova_url):
         for i in self.__arvores:
-            nomeFilho=i.getRaiz()
+            nomeFilho=i.getRoot()
             if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(nova_url.split('/'))) == (len(str(nomeFilho).split('/'))+1) :
-                if i.getBaixoEsq() is None:
+                if i.downLeft() is None:
                     i.resetCursor()
-                    i.addFilhoEsq(nova_url)
+                    i.addLeftChild(nova_url)
                     i.resetCursor()
-                elif i.getBaixoDir() is None:
+                elif i.downRight() is None:
                     i.resetCursor()
-                    i.addFilhoDir(nova_url)
+                    i.addRightChild(nova_url)
                     i.resetCursor()
                 else:
                     pass
@@ -60,7 +66,7 @@ class Navegador:
             with open(self.__nome_arquivo,'a') as arquivo:
               arquivo.write('\n'+nova_url)
               self.__sites.append(nova_url)
-              self.__arvores.append(ArvoreBinaria(nova_url))
+              self.__arvores.append(BinaryTree(nova_url))
               self.teste_filho(nova_url)
             #   self.__sites.append(nova_url)
               with open(nova_url.replace('/','.',4)+'.txt','w') as arquivo2:

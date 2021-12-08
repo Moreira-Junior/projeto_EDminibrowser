@@ -13,6 +13,7 @@ while True:
         print(f'Home: {url}')
     except:
         print(f'Home: ') 
+    print()
     print('Páginas internas: ')
     try:
         if navegador1.pegar_filho_esq(url) is None:
@@ -26,6 +27,7 @@ while True:
             print(navegador1.pegar_filho_dir(url))
     except:
         print('')
+    print()
     print('Renderizador:')
     try:
         render=url.replace('/','.',4)
@@ -35,6 +37,7 @@ while True:
         print('')
 
     print('Digite a url ou #back para retornar à última página visitada.')
+    print('Para entrar numa página interna, digite /"paginaInterna"!')
     print('Para abrir a ajuda, digite #help!')
     ent=input()
     ent=ent.lower()
