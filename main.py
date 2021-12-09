@@ -41,6 +41,7 @@ while True:
     print('Para abrir a ajuda, digite #help!')
     ent=input()
     ent=ent.lower()
+
     try:
         if str(url)==ent:
             print('Você já está nessa página!')
@@ -49,10 +50,16 @@ while True:
     except:
         pass
     
-
+    if ent=='':
+        while True:
+            print('Digite uma página: ')
+            ent=input()
+            ent=ent.lower() 
+            if ent!='':
+                break
 
     #funcionalidade back, retornando a página anterior na pilha  
-    if ent=='#back':
+    elif ent=='#back':
         if navegador1.pilha_vazia():
             print('Não há página no histórico ainda!')
         else:
@@ -116,6 +123,12 @@ while True:
         print('Fim do programa!')
         break
 
+    elif ent=='':
+        try:
+            if navegador1.topo_pilha()==url:
+                navegador1.voltar()
+        except:
+            pass
     #comando para acessar paginas internas    
     elif ent[0]=='/':
         teste_url = url +'/' +ent.strip('/')
