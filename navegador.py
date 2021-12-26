@@ -91,7 +91,7 @@ www.ifpb.edu.br/tsi/professores''')
               arquivo.write('\n'+nova_url)
               self.__sites.append(nova_url)
               obj=self.__grafo.addVertice(nova_url)
-              self.__vertices.append(obj)
+            #   self.__vertices.append(obj)
               self.teste_filho(obj)
             #   self.__sites.append(nova_url)
               with open(nova_url.replace('/','.',4)+'.txt','w') as arquivo2:
