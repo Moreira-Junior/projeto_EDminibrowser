@@ -61,16 +61,6 @@ class Grafo():
                 break
         return self.testeMatch
 
-    def match2(self,nova_url):
-        for i in self.__vertices:
-            if str(i).split('/')[-1]==nova_url.split('/')[-1]:
-                obj=i
-                self.testeMatch(i)
-    
-    # def testeMatch(self,obj):
-    #     '''checar na lista de adjacentes, se há o par ['/',str(obj).split('/')[0]'''
-    #     pass
-
                 
         
             
