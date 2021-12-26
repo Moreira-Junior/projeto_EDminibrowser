@@ -99,8 +99,10 @@ while True:
         try:
             teste=ent.split(' ')[1]
             if navegador1.forma(teste):
-                navegador1.adicionar(teste)
-                print('Página adicionada!')
+                if navegador1.adicionar(teste):
+                    print('Página já existe!')
+                else:
+                    print('Página adicionada!')
                 try:
                     if navegador1.topo_pilha()==url:
                         navegador1.voltar()

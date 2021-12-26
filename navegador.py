@@ -97,7 +97,9 @@ www.ifpb.edu.br/tsi/professores''')
               with open(nova_url.replace('/','.',4)+'.txt','w') as arquivo2:
                   arquivo2.write('\n<O conteudo da pagina '+nova_url+' esta sendo exibido.>')
               arquivo2.close()
-              arquivo.close()    
+              arquivo.close()
+              if not '/' in str(obj):
+                self.__grafo.addAresta(self.__raiz,obj)    
         return self.existe
 
     def empilhar(self,url):

@@ -54,6 +54,7 @@ class Grafo():
             nomeFilho=str(i)
             if (nomeFilho) in (nova_url) and (nomeFilho) != (nova_url) and (len((nova_url).split('/'))) == (len((nomeFilho).split('/'))+1) and nomeFilho!='/':
                 self.testeMatch=True
+                self.match(nomeFilho)
                 break
             elif len(str(nova_url).split('/'))==1 and nomeFilho!='/':
                 self.testeMatch=True
@@ -66,9 +67,9 @@ class Grafo():
                 obj=i
                 self.testeMatch(i)
     
-    def testeMatch(self,obj):
-        '''checar na lista de adjacentes, se há o par ['/',str(obj).split('/')[0]'''
-        pass
+    # def testeMatch(self,obj):
+    #     '''checar na lista de adjacentes, se há o par ['/',str(obj).split('/')[0]'''
+    #     pass
 
                 
         
