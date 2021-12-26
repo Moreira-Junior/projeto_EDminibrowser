@@ -1,7 +1,8 @@
+from ElementosGrafo import Vertice
 from pilha import Pilha
 import re
-from binarytree import *
-
+# from binarytree import *
+from Grafo import Grafo
 
 class Navegador:
     """Classe Navegador, responsável por controlar as classes pilha e árvore.
@@ -9,14 +10,17 @@ class Navegador:
     def __init__(self,nome_arquivo):
         self.__historico=Pilha()
         self.__nome_arquivo=nome_arquivo
-        self.__sites=[]
-        self.__arvores=[]
-        try:
-            self.captar_banco(nome_arquivo)
-        except:
-            with open(nome_arquivo,'w') as arquivo:  
-                arquivo.close()
-            self.captar_banco(nome_arquivo)
+        self.__sites=[] 
+        self.__vertices=[]
+        self.__grafo = Grafo()
+        self.__raiz=self.__grafo.addVertice('/')
+        self.captar_banco(nome_arquivo)
+        # try:
+        #     self.captar_banco(nome_arquivo)
+        # except:
+        #     with open(nome_arquivo,'w') as arquivo:  
+        #         arquivo.close()
+        #     self.captar_banco(nome_arquivo)
         
     def captar_banco(self,nome_arquivo):
         """ Captura páginas de um banco de dados txt e alimenta uma lista.
@@ -25,14 +29,21 @@ class Navegador:
         with open(nome_arquivo) as arquivo:
             for i in arquivo:
                 i=i.strip('\n')
-                self.__arvores.append(BinaryTree(i))
-                self.teste_filho(i)
+                self.__vertices.append(self.__grafo.addVertice(i))
+                # self.__grafo.addVertice(i)
+                # self.teste_filho(i)
                 self.__sites.append(i)
                 i=i.replace('/','.',4)
                 with open(i+'.txt','w') as arquivo2:
                     arquivo2.write('\n<O conteudo da pagina '+i+' esta sendo exibido.>')
                 arquivo2.close()
+            # self.teste_filho(i)
             arquivo.close()
+
+        for i in self.__vertices:
+            self.teste_filho(i)
+            if not '/' in str(i):
+                self.__grafo.addAresta(self.__raiz,i)
     
     def pegar_filho_esq(self,url):
         """Seleciona filho esquerdo de uma árvore url.
@@ -56,19 +67,11 @@ class Navegador:
     """Testa se a nova_url de entrada é subpágina de alguma das páginas instanciadas.
     Caso seja, é alocada abaixo. Como parâmetro é passado uma nova_url."""
     def teste_filho(self,nova_url):
-        for i in self.__arvores:
-            nomeFilho=i.getRoot()
-            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(nova_url.split('/'))) == (len(str(nomeFilho).split('/'))+1) :
-                if i.downLeft() is None:
-                    i.resetCursor()
-                    i.addLeftChild(nova_url)
-                    i.resetCursor()
-                elif i.downRight() is None:
-                    i.resetCursor()
-                    i.addRightChild(nova_url)
-                    i.resetCursor()
-                else:
-                    pass
+        for i in self.__vertices:
+            nomeFilho=i
+            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(str(nova_url).split('/'))) == (len(str(nomeFilho).split('/'))+1) :
+                self.__grafo.addAresta(nomeFilho,nova_url)
+
             
     def adicionar(self,nova_url):
         """Método para adicionar uma nova_url. Testa existência no banco de dados.
@@ -78,8 +81,9 @@ class Navegador:
             with open(self.__nome_arquivo,'a') as arquivo:
               arquivo.write('\n'+nova_url)
               self.__sites.append(nova_url)
-              self.__arvores.append(BinaryTree(nova_url))
-              self.teste_filho(nova_url)
+              obj=self.__grafo.addVertice(nova_url)
+              self.__vertices.append(obj)
+              self.teste_filho(obj)
             #   self.__sites.append(nova_url)
               with open(nova_url.replace('/','.',4)+'.txt','w') as arquivo2:
                   arquivo2.write('\n<O conteudo da pagina '+nova_url+' esta sendo exibido.>')
@@ -146,6 +150,32 @@ class Navegador:
             string=arquivo2.read()
         arquivo2.close()
         return string
+    
+    def print_adjacentes(self,url):
+        '''Responsável por imprimir os vértices adjacentes ao vértice url.'''
+        return self.__grafo.printAdj(url)
+    
+    def printGrafo(self):
+        print(self.__grafo)
+
+    def match(self,nova_url):
+        '''Responsável por verificar se a url inserida possui páginas superiores.'''
+        # return self.__grafo.match(nova_url)
+        self.__testeMatch=False 
+        for i in self.__vertices:
+            nomeFilho=i
+            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(str(nova_url).split('/'))) == (len(str(nomeFilho).split('/'))+1) :
+                self.__testeMatch=True
+            elif '/' not in str(nomeFilho):
+                self.__testeMatch=True
+            else:
+                self.__testeMatch=False
+        return self.__testeMatch
+
+
+        
+    
+
 
         
 
