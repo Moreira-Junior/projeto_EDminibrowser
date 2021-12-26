@@ -11,20 +11,14 @@ while True:
         print(f'Páginas visitadas: ')
     try:
         print(f'Home: {url}')
+        print(f'Match: {navegador1.match(url)}')
     except:
         print(f'Home: ') 
+        print(f'Match: ')
     print()
     print('Páginas internas: ')
     try:
-        if navegador1.pegar_filho_esq(url) is None:
-            print('')
-        else:
-            print(navegador1.pegar_filho_esq(url))
-        # url.resetCursor()
-        if navegador1.pegar_filho_dir(url) is None:
-            print('')
-        else:
-            print(navegador1.pegar_filho_dir(url))
+        navegador1.print_adjacentes(url)
     except:
         print('')
     print()
@@ -63,6 +57,24 @@ while True:
             else:
                 navegador1.__init__('sites.txt')
                 del url
+    
+    elif ent=='#grafo':
+        navegador1.printGrafo()
+        try:
+            if navegador1.topo_pilha()==url:
+                navegador1.voltar()
+        except:
+            pass
+        input('Pressione ENTER para continuar')
+
+    elif ent=='#res':
+        navegador1.__init__('sites.txt')
+        try:
+            if navegador1.topo_pilha()==url:
+                navegador1.voltar()
+        except:
+            pass
+        input('Pressione ENTER para continuar')
 
     #funcionalidade para informar quais comandos poderão ser utilizados pelo usuário
     elif ent=='#help' or ent=='':
@@ -72,6 +84,8 @@ while True:
         #add                    adiciona uma página
         #back                   voltar para página anterior
         #showhist               mostrar o histórico de navegação
+        #grafo                  imprime o grafo
+        #res                    reinicia o navegador
         ''')
         try:
             if navegador1.topo_pilha()==url:
@@ -86,6 +100,7 @@ while True:
             teste=ent.split(' ')[1]
             if navegador1.forma(teste):
                 navegador1.adicionar(teste)
+                print('Página adicionada!')
                 try:
                     if navegador1.topo_pilha()==url:
                         navegador1.voltar()
@@ -116,31 +131,31 @@ while True:
         print('Fim do programa!')
         break
 
-    elif ent=='':
-        try:
-            if navegador1.topo_pilha()==url:
-                navegador1.voltar()
-        except:
-            pass
     #comando para acessar paginas internas    
     elif ent[0]=='/':
         teste_url = url +'/' +ent.strip('/')
         if navegador1.existencia(teste_url):
             url = url +'/' +ent.strip('/')
+            print('Página encontrada!')
         else:
             print('Página Inválida')
             navegador1.voltar()
+        
     
     #entrada de url
     else:
       while True:
         url=ent
         if navegador1.existencia(url):
+          print('Página encontrada!')  
           break
         else:
+          print()
+          print('Página inválida!')  
           print('Digite novamente a página: ')
+          print('Para sair do loop digite #voltar.')
           ent=input()
           ent=ent.lower()
-          if ent=='#sair' or ent=='#back' or ent=='#help' or ent=='#add' or ent=='#showhist' or ent=='#help':
+          if ent=='#sair' or ent=='#back' or ent=='#help' or ent=='#add' or ent=='#showhist' or ent=='#help' or ent=='#voltar':
             del url
             break

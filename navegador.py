@@ -11,16 +11,24 @@ class Navegador:
         self.__historico=Pilha()
         self.__nome_arquivo=nome_arquivo
         self.__sites=[] 
-        self.__vertices=[]
         self.__grafo = Grafo()
+        self.__vertices=self.__grafo.getListVert()
         self.__raiz=self.__grafo.addVertice('/')
-        self.captar_banco(nome_arquivo)
-        # try:
-        #     self.captar_banco(nome_arquivo)
-        # except:
-        #     with open(nome_arquivo,'w') as arquivo:  
-        #         arquivo.close()
-        #     self.captar_banco(nome_arquivo)
+        # self.captar_banco(nome_arquivo)
+        try:
+            self.captar_banco(nome_arquivo)
+        except:
+            with open(nome_arquivo,'w') as arquivo:  
+                arquivo.write('''www.google.com
+www.facebook.com
+www.ifpb.edu.br
+www.ifpb.edu.br/tsi
+www.ifpb.edu.br/rc
+www.ufpb.br
+www.instagram.com
+www.ifpb.edu.br/tsi/professores''')
+                arquivo.close()
+            self.captar_banco(nome_arquivo)
         
     def captar_banco(self,nome_arquivo):
         """ Captura páginas de um banco de dados txt e alimenta uma lista.
@@ -29,7 +37,8 @@ class Navegador:
         with open(nome_arquivo) as arquivo:
             for i in arquivo:
                 i=i.strip('\n')
-                self.__vertices.append(self.__grafo.addVertice(i))
+                self.__grafo.addVertice(i)
+                # self.__vertices.append(self.__grafo.addVertice(i))
                 # self.__grafo.addVertice(i)
                 # self.teste_filho(i)
                 self.__sites.append(i)
@@ -69,7 +78,7 @@ class Navegador:
     def teste_filho(self,nova_url):
         for i in self.__vertices:
             nomeFilho=i
-            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(str(nova_url).split('/'))) == (len(str(nomeFilho).split('/'))+1) :
+            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(str(nova_url).split('/'))) == (len(str(nomeFilho).split('/'))+1) and str(nomeFilho)!='/':
                 self.__grafo.addAresta(nomeFilho,nova_url)
 
             
@@ -160,17 +169,8 @@ class Navegador:
 
     def match(self,nova_url):
         '''Responsável por verificar se a url inserida possui páginas superiores.'''
-        # return self.__grafo.match(nova_url)
-        self.__testeMatch=False 
-        for i in self.__vertices:
-            nomeFilho=i
-            if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(str(nova_url).split('/'))) == (len(str(nomeFilho).split('/'))+1) :
-                self.__testeMatch=True
-            elif '/' not in str(nomeFilho):
-                self.__testeMatch=True
-            else:
-                self.__testeMatch=False
-        return self.__testeMatch
+        return self.__grafo.match(nova_url)
+
 
 
         
