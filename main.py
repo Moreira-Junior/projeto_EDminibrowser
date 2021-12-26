@@ -58,6 +58,7 @@ while True:
                 navegador1.__init__('sites.txt')
                 del url
     
+    #funcionalidade grafo para imprimir o grafo
     elif ent=='#grafo':
         navegador1.printGrafo()
         try:
@@ -66,7 +67,8 @@ while True:
         except:
             pass
         input('Pressione ENTER para continuar')
-
+    
+    #funcionalidade #res para reiniciar o navegador
     elif ent=='#res':
         navegador1.__init__('sites.txt')
         try:

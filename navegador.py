@@ -1,11 +1,9 @@
-from ElementosGrafo import Vertice
 from pilha import Pilha
 import re
-# from binarytree import *
 from Grafo import Grafo
 
 class Navegador:
-    """Classe Navegador, responsável por controlar as classes pilha e árvore.
+    """Classe Navegador, responsável por controlar as classes pilha e grafo.
     Possui parâmetro de entrada como sendo o nome do arquivo do banco de dados de páginas, uma string."""
     def __init__(self,nome_arquivo):
         self.__historico=Pilha()
@@ -14,7 +12,6 @@ class Navegador:
         self.__grafo = Grafo()
         self.__vertices=self.__grafo.getListVert()
         self.__raiz=self.__grafo.addVertice('/')
-        # self.captar_banco(nome_arquivo)
         try:
             self.captar_banco(nome_arquivo)
         except:
@@ -33,20 +30,16 @@ www.ifpb.edu.br/tsi/professores''')
     def captar_banco(self,nome_arquivo):
         """ Captura páginas de um banco de dados txt e alimenta uma lista.
         Passar o parâmetro nome_arquivo, sendo o nome do arquivo txt do banco de dados, uma string. 
-        Instancia árvores a partir de páginas.""" 
+        Instancia vértices do grafo a partir de páginas.""" 
         with open(nome_arquivo) as arquivo:
             for i in arquivo:
                 i=i.strip('\n')
                 self.__grafo.addVertice(i)
-                # self.__vertices.append(self.__grafo.addVertice(i))
-                # self.__grafo.addVertice(i)
-                # self.teste_filho(i)
                 self.__sites.append(i)
                 i=i.replace('/','.',4)
                 with open(i+'.txt','w') as arquivo2:
                     arquivo2.write('\n<O conteudo da pagina '+i+' esta sendo exibido.>')
                 arquivo2.close()
-            # self.teste_filho(i)
             arquivo.close()
 
         for i in self.__vertices:
@@ -54,28 +47,10 @@ www.ifpb.edu.br/tsi/professores''')
             if not '/' in str(i):
                 self.__grafo.addAresta(self.__raiz,i)
     
-    def pegar_filho_esq(self,url):
-        """Seleciona filho esquerdo de uma árvore url.
-        Para funcionar, basta passar uma string url."""
-        for i in self.__arvores:
-            if str(i.getRoot())==url:
-                temp = i.downLeft()
-                i.resetCursor()
-                return temp
-
-
-    def pegar_filho_dir(self,url):
-        """Seleciona filho direito de uma árvore url.
-        Para funcionar, basta passar uma string url."""
-        for i in self.__arvores:
-            if str(i.getRoot())==url:
-                temp = i.downRight()
-                i.resetCursor()
-                return temp
-
-    """Testa se a nova_url de entrada é subpágina de alguma das páginas instanciadas.
-    Caso seja, é alocada abaixo. Como parâmetro é passado uma nova_url."""
+    
     def teste_filho(self,nova_url):
+        """Testa se a nova_url de entrada é subpágina de alguma das páginas instanciadas.
+        Caso seja, é alocada abaixo. Como parâmetro é passado uma nova_url."""
         for i in self.__vertices:
             nomeFilho=i
             if str(nomeFilho) in str(nova_url) and str(nomeFilho) != str(nova_url) and (len(str(nova_url).split('/'))) == (len(str(nomeFilho).split('/'))+1) and str(nomeFilho)!='/':
@@ -84,16 +59,14 @@ www.ifpb.edu.br/tsi/professores''')
             
     def adicionar(self,nova_url):
         """Método para adicionar uma nova_url. Testa existência no banco de dados.
-        Testa se a página é subpágina. Instancia a árvore da página. Escreve mensagem a ser
+        Testa se a página é subpágina. Instancia o vértice da página. Escreve mensagem a ser
         renderizada da página nova. O parâmetro passado é nova_url, uma string."""
         if not self.existencia(nova_url):
             with open(self.__nome_arquivo,'a') as arquivo:
               arquivo.write('\n'+nova_url)
               self.__sites.append(nova_url)
               obj=self.__grafo.addVertice(nova_url)
-            #   self.__vertices.append(obj)
               self.teste_filho(obj)
-            #   self.__sites.append(nova_url)
               with open(nova_url.replace('/','.',4)+'.txt','w') as arquivo2:
                   arquivo2.write('\n<O conteudo da pagina '+nova_url+' esta sendo exibido.>')
               arquivo2.close()
@@ -167,6 +140,7 @@ www.ifpb.edu.br/tsi/professores''')
         return self.__grafo.printAdj(url)
     
     def printGrafo(self):
+        '''Responsável por imprimir o grafo com seus vértices e arestas.'''
         print(self.__grafo)
 
     def match(self,nova_url):
